@@ -13,5 +13,6 @@ jobs:
     steps:
       - name: Consume input ephemerally
         run: |
-          echo "The passed value is: ${{ inputs.env_input }}"
+          echo "The passed value is:" # ${{ inputs.env_input }}"
+          echo "::add-mask::${{ inputs.env_input }}"
           # Use the value directly in commands without writing to GITHUB_ENV or secrets
