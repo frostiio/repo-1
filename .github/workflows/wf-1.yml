@@ -16,3 +16,18 @@ jobs:
           echo "The passed value is:" # ${{ inputs.env_input }}"
           echo "::add-mask::${{ inputs.env_input }}"
           # Use the value directly in commands without writing to GITHUB_ENV or secrets
+
+      - name: Mask and Export Environment Variable
+        run: |
+          SECRET_VAL="${{ inputs.env_input }}"
+          
+          # 1. Register the value with the runner's masking engine
+          echo "::add-mask::$SECRET_VAL"
+          
+          # 2. Export the value to GITHUB_ENV for subsequent steps
+          echo "MY_SECURE_VAR=$SECRET_VAL" >> $GITHUB_ENV
+
+      - name: Consume Environment Variable Safely
+        run: |
+          # This will print as '***' in the workflow logs
+          echo "Using secure variable: $MY_SECURE_VAR"
